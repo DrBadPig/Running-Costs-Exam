@@ -5,19 +5,22 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace exam3
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
         List<string> categories;
         List<string> members;
         List<Operation> notes;
 
-        public Form1()
+        string theme;
+
+        public Main()
         {
             InitializeComponent();
 
@@ -55,7 +58,45 @@ namespace exam3
         private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (comboBoxMembers.Items.Count == 0) MessageBox.Show("Nothing to delete :(", "Damnn it!", MessageBoxButtons.OK);
-            else if (comboBoxCategories.SelectedItem == null) MessageBox.Show("You chose nothing", "Damn it!", MessageBoxButtons.OK);
+            else if (comboBoxMembers.SelectedItem == null) MessageBox.Show("You chose nothing", "Damn it!", MessageBoxButtons.OK);
+            else
+            {
+                DialogResult res = MessageBox.Show($"Are you sure you want to delete {comboBoxMembers.SelectedItem} " +
+                    $"member? It will delete all operations related to it", "Warning", MessageBoxButtons.YesNo);
+
+                if (res == DialogResult.Yes)
+                {
+                    members.Remove(comboBoxCategories.SelectedItem.ToString());
+                    comboBoxMembers.Items.Remove(comboBoxMembers.SelectedItem.ToString());
+
+                    /*
+                     
+                    NEED TO DO SOME SHIT
+
+                    */
+                }
+            }
+        }
+
+        private void addToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            string name = Interaction.InputBox("Enter member name:", "Add member", "Member name", 30, 30);
+            bool createNew = true;
+
+            foreach (var item in members)
+            {
+                if (item == name)
+                {
+                    MessageBox.Show("This member already exists", "Damn it", MessageBoxButtons.OK);
+                    createNew = false;
+                }
+            }
+
+            if (createNew)
+            {
+                members.Add(name);
+                comboBoxMembers.Items.Add(name);
+            }
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -104,6 +145,8 @@ namespace exam3
 
         private void standartToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            theme = "standart";
+
             this.BackColor = Color.WhiteSmoke;
 
             listExps.BackColor = Color.White;
@@ -138,6 +181,8 @@ namespace exam3
 
         private void darkToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            theme = "dark";
+
             this.BackColor = Color.DimGray;
 
             listExps.BackColor = Color.Gray;
@@ -172,6 +217,8 @@ namespace exam3
 
         private void glamorToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            theme = "glamor";
+
             this.BackColor = Color.Purple;
 
             listExps.BackColor = Color.DarkMagenta;
@@ -206,6 +253,8 @@ namespace exam3
 
         private void arcticToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            theme = "arctic";
+
             this.BackColor = Color.LightCyan;
 
             listExps.BackColor = Color.Azure;
@@ -240,6 +289,8 @@ namespace exam3
 
         private void deepSeaToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            theme = "deepsea";
+
             this.BackColor = Color.Teal;
 
             listExps.BackColor = Color.DarkCyan;
@@ -274,6 +325,8 @@ namespace exam3
 
         private void oliveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            theme = "olive";
+
             this.BackColor = Color.DarkOliveGreen;
 
             listExps.BackColor = Color.OliveDrab;
@@ -304,6 +357,19 @@ namespace exam3
 
             label1.ForeColor = Color.YellowGreen;
             label2.ForeColor = Color.YellowGreen;
+        }
+
+        private void deleteToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Operation op = new Operation();
+            AddOperation addOperation = new AddOperation(op, theme, members, categories);
+
+            DialogResult res = addOperation.ShowDialog();
         }
     }
 }

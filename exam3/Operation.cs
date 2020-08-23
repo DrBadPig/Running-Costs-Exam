@@ -9,7 +9,7 @@ namespace exam3
     /// <summary>
     /// This class is item in listView 
     /// </summary>
-    class Operation
+    public class Operation
     {
         int id;
         DateTime date;

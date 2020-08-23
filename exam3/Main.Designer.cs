@@ -1,6 +1,6 @@
 ﻿namespace exam3
 {
-    partial class Form1
+    partial class Main
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,6 +40,8 @@
             this.darkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.glamorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arcticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deepSeaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oliveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.comboBoxSearch = new System.Windows.Forms.ComboBox();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
@@ -54,12 +56,10 @@
             this.addToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.listExps = new System.Windows.Forms.ListView();
-            this.deepSeaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.oliveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuListExps = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -122,36 +122,50 @@
             this.deepSeaToolStripMenuItem,
             this.oliveToolStripMenuItem});
             this.themeToolStripMenuItem.Name = "themeToolStripMenuItem";
-            this.themeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.themeToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.themeToolStripMenuItem.Text = "Theme";
             // 
             // standartToolStripMenuItem
             // 
             this.standartToolStripMenuItem.Name = "standartToolStripMenuItem";
-            this.standartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.standartToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.standartToolStripMenuItem.Text = "Standart";
             this.standartToolStripMenuItem.Click += new System.EventHandler(this.standartToolStripMenuItem_Click);
             // 
             // darkToolStripMenuItem
             // 
             this.darkToolStripMenuItem.Name = "darkToolStripMenuItem";
-            this.darkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.darkToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.darkToolStripMenuItem.Text = "Dark";
             this.darkToolStripMenuItem.Click += new System.EventHandler(this.darkToolStripMenuItem_Click);
             // 
             // glamorToolStripMenuItem
             // 
             this.glamorToolStripMenuItem.Name = "glamorToolStripMenuItem";
-            this.glamorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.glamorToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.glamorToolStripMenuItem.Text = "Glamor";
             this.glamorToolStripMenuItem.Click += new System.EventHandler(this.glamorToolStripMenuItem_Click);
             // 
             // arcticToolStripMenuItem
             // 
             this.arcticToolStripMenuItem.Name = "arcticToolStripMenuItem";
-            this.arcticToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.arcticToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.arcticToolStripMenuItem.Text = "Arctic";
             this.arcticToolStripMenuItem.Click += new System.EventHandler(this.arcticToolStripMenuItem_Click);
+            // 
+            // deepSeaToolStripMenuItem
+            // 
+            this.deepSeaToolStripMenuItem.Name = "deepSeaToolStripMenuItem";
+            this.deepSeaToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.deepSeaToolStripMenuItem.Text = "Deep sea";
+            this.deepSeaToolStripMenuItem.Click += new System.EventHandler(this.deepSeaToolStripMenuItem_Click);
+            // 
+            // oliveToolStripMenuItem
+            // 
+            this.oliveToolStripMenuItem.Name = "oliveToolStripMenuItem";
+            this.oliveToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.oliveToolStripMenuItem.Text = "Olive";
+            this.oliveToolStripMenuItem.Click += new System.EventHandler(this.oliveToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 
@@ -295,6 +309,7 @@
             this.addToolStripMenuItem1.Name = "addToolStripMenuItem1";
             this.addToolStripMenuItem1.Size = new System.Drawing.Size(82, 22);
             this.addToolStripMenuItem1.Text = "Add";
+            this.addToolStripMenuItem1.Click += new System.EventHandler(this.addToolStripMenuItem1_Click);
             // 
             // deleteToolStripMenuItem1
             // 
@@ -316,20 +331,6 @@
             this.listExps.UseCompatibleStateImageBehavior = false;
             this.listExps.View = System.Windows.Forms.View.Details;
             // 
-            // deepSeaToolStripMenuItem
-            // 
-            this.deepSeaToolStripMenuItem.Name = "deepSeaToolStripMenuItem";
-            this.deepSeaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.deepSeaToolStripMenuItem.Text = "Deep sea";
-            this.deepSeaToolStripMenuItem.Click += new System.EventHandler(this.deepSeaToolStripMenuItem_Click);
-            // 
-            // oliveToolStripMenuItem
-            // 
-            this.oliveToolStripMenuItem.Name = "oliveToolStripMenuItem";
-            this.oliveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.oliveToolStripMenuItem.Text = "Olive";
-            this.oliveToolStripMenuItem.Click += new System.EventHandler(this.oliveToolStripMenuItem_Click);
-            // 
             // contextMenuListExps
             // 
             this.contextMenuListExps.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -345,18 +346,20 @@
             this.addToolStripMenuItem2.Name = "addToolStripMenuItem2";
             this.addToolStripMenuItem2.Size = new System.Drawing.Size(155, 22);
             this.addToolStripMenuItem2.Text = "Add";
-            // 
-            // deleteToolStripMenuItem2
-            // 
-            this.deleteToolStripMenuItem2.Name = "deleteToolStripMenuItem2";
-            this.deleteToolStripMenuItem2.Size = new System.Drawing.Size(155, 22);
-            this.deleteToolStripMenuItem2.Text = "Delete";
+            this.addToolStripMenuItem2.Click += new System.EventHandler(this.addToolStripMenuItem2_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // deleteToolStripMenuItem2
+            // 
+            this.deleteToolStripMenuItem2.Name = "deleteToolStripMenuItem2";
+            this.deleteToolStripMenuItem2.Size = new System.Drawing.Size(155, 22);
+            this.deleteToolStripMenuItem2.Text = "Delete";
+            this.deleteToolStripMenuItem2.Click += new System.EventHandler(this.deleteToolStripMenuItem2_Click);
             // 
             // Form1
             // 
