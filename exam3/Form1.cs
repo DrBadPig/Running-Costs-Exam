@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -41,11 +42,11 @@ namespace exam3
             notes = new List<Operation>();
 
             listExps.Columns.Add("№", 30, HorizontalAlignment.Left);
-            listExps.Columns.Add("Title", 80, HorizontalAlignment.Center);
-            listExps.Columns.Add("Cost", 50, HorizontalAlignment.Center);
-            listExps.Columns.Add("Date", 100, HorizontalAlignment.Center);
-            listExps.Columns.Add("Description", 200, HorizontalAlignment.Center);
-            listExps.Columns.Add("Member", 80, HorizontalAlignment.Right);
+            listExps.Columns.Add("Title", 100, HorizontalAlignment.Center);
+            listExps.Columns.Add("Cost", 60, HorizontalAlignment.Center);
+            listExps.Columns.Add("Date", 120, HorizontalAlignment.Center);
+            listExps.Columns.Add("Description", 230, HorizontalAlignment.Center);
+            listExps.Columns.Add("Member", 100, HorizontalAlignment.Right);
 
             members = new List<string>();
             
@@ -78,6 +79,231 @@ namespace exam3
                     */
                 }
             }
+        }
+
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string name = Interaction.InputBox("Enter category name:", "Add category", "Category name", 30, 30);
+            bool createNew = true;
+
+            foreach (var item in categories)
+            {
+                if (item == name)
+                {
+                    MessageBox.Show("This category already exists", "Damn it", MessageBoxButtons.OK);
+                    createNew = false;
+                }
+            }
+
+            if (createNew)
+            {
+                categories.Add(name);
+                comboBoxCategories.Items.Add(name);
+            }
+        }
+
+        private void standartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.BackColor = Color.WhiteSmoke;
+
+            listExps.BackColor = Color.White;
+            listExps.ForeColor = Color.Black;
+
+            menuStrip1.BackColor = Color.WhiteSmoke;
+            foreach (ToolStripItem item in menuStrip1.Items)
+            {
+                item.ForeColor = Color.Black;
+            }
+
+            comboBoxSearch.BackColor = Color.White;
+            comboBoxSearch.ForeColor = Color.Black;
+            textBoxSearch.BackColor = Color.White;
+            textBoxSearch.ForeColor = Color.Black;
+
+            comboBoxCategories.BackColor = Color.White;
+            comboBoxCategories.ForeColor = Color.Black;
+            comboBoxMembers.BackColor = Color.White;
+            comboBoxMembers.ForeColor = Color.Black;
+
+            contextMenuCategories.BackColor = Color.WhiteSmoke;
+            contextMenuCategories.ForeColor = Color.Black;
+            contextMenuMembers.BackColor = Color.WhiteSmoke;
+            contextMenuMembers.ForeColor = Color.Black;
+            contextMenuListExps.BackColor = Color.WhiteSmoke;
+            contextMenuListExps.ForeColor = Color.Black;
+
+            label1.ForeColor = Color.Black;
+            label2.ForeColor = Color.Black;
+        }
+
+        private void darkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.BackColor = Color.DimGray;
+
+            listExps.BackColor = Color.Gray;
+            listExps.ForeColor = Color.WhiteSmoke;
+
+            menuStrip1.BackColor = Color.DimGray;
+            foreach (ToolStripItem item in menuStrip1.Items)
+            {
+                item.ForeColor = Color.WhiteSmoke;
+            }
+
+            comboBoxSearch.BackColor = Color.Gray;
+            comboBoxSearch.ForeColor = Color.WhiteSmoke;
+            textBoxSearch.BackColor = Color.Gray;
+            textBoxSearch.ForeColor = Color.WhiteSmoke;
+
+            comboBoxCategories.BackColor = Color.Gray;
+            comboBoxCategories.ForeColor = Color.WhiteSmoke;
+            comboBoxMembers.BackColor = Color.Gray;
+            comboBoxMembers.ForeColor = Color.WhiteSmoke;
+
+            contextMenuCategories.BackColor = Color.DimGray;
+            contextMenuCategories.ForeColor = Color.WhiteSmoke;
+            contextMenuMembers.BackColor = Color.DimGray;
+            contextMenuMembers.ForeColor = Color.WhiteSmoke;
+            contextMenuListExps.BackColor = Color.DimGray;
+            contextMenuListExps.ForeColor = Color.WhiteSmoke;
+
+            label1.ForeColor = Color.WhiteSmoke;
+            label2.ForeColor = Color.WhiteSmoke;
+        }
+
+        private void glamorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.BackColor = Color.Purple;
+
+            listExps.BackColor = Color.DarkMagenta;
+            listExps.ForeColor = Color.Gold;
+
+            menuStrip1.BackColor = Color.Purple;
+            foreach (ToolStripItem item in menuStrip1.Items)
+            {
+                item.ForeColor = Color.Gold;
+            }
+
+            comboBoxSearch.BackColor = Color.DarkMagenta;
+            comboBoxSearch.ForeColor = Color.Gold;
+            textBoxSearch.BackColor = Color.DarkMagenta;
+            textBoxSearch.ForeColor = Color.Gold;
+
+            comboBoxCategories.BackColor = Color.DarkMagenta;
+            comboBoxCategories.ForeColor = Color.Gold;
+            comboBoxMembers.BackColor = Color.DarkMagenta;
+            comboBoxMembers.ForeColor = Color.Gold;
+
+            contextMenuCategories.BackColor = Color.Purple;
+            contextMenuCategories.ForeColor = Color.Gold;
+            contextMenuMembers.BackColor = Color.Purple;
+            contextMenuMembers.ForeColor = Color.Gold;
+            contextMenuListExps.BackColor = Color.Purple;
+            contextMenuListExps.ForeColor = Color.Gold;
+
+            label1.ForeColor = Color.Gold;
+            label2.ForeColor = Color.Gold;
+        }
+
+        private void arcticToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.BackColor = Color.LightCyan;
+
+            listExps.BackColor = Color.Azure;
+            listExps.ForeColor = Color.Black;
+
+            menuStrip1.BackColor = Color.LightCyan;
+            foreach (ToolStripItem item in menuStrip1.Items)
+            {
+                item.ForeColor = Color.Black;
+            }
+
+            comboBoxSearch.BackColor = Color.Azure;
+            comboBoxSearch.ForeColor = Color.Black;
+            textBoxSearch.BackColor = Color.Azure;
+            textBoxSearch.ForeColor = Color.Black;
+
+            comboBoxCategories.BackColor = Color.Azure;
+            comboBoxCategories.ForeColor = Color.Black;
+            comboBoxMembers.BackColor = Color.Azure;
+            comboBoxMembers.ForeColor = Color.Black;
+
+            contextMenuCategories.BackColor = Color.LightCyan;
+            contextMenuCategories.ForeColor = Color.Black;
+            contextMenuMembers.BackColor = Color.LightCyan;
+            contextMenuMembers.ForeColor = Color.Black;
+            contextMenuListExps.BackColor = Color.LightCyan;
+            contextMenuListExps.ForeColor = Color.Black;
+
+            label1.ForeColor = Color.Black;
+            label2.ForeColor = Color.Black;
+        }
+
+        private void deepSeaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.BackColor = Color.Teal;
+
+            listExps.BackColor = Color.DarkCyan;
+            listExps.ForeColor = Color.MidnightBlue;
+
+            menuStrip1.BackColor = Color.Teal;
+            foreach (ToolStripItem item in menuStrip1.Items)
+            {
+                item.ForeColor = Color.MidnightBlue;
+            }
+
+            comboBoxSearch.BackColor = Color.DarkCyan;
+            comboBoxSearch.ForeColor = Color.MidnightBlue;
+            textBoxSearch.BackColor = Color.DarkCyan;
+            textBoxSearch.ForeColor = Color.MidnightBlue;
+
+            comboBoxCategories.BackColor = Color.DarkCyan;
+            comboBoxCategories.ForeColor = Color.MidnightBlue;
+            comboBoxMembers.BackColor = Color.DarkCyan;
+            comboBoxMembers.ForeColor = Color.MidnightBlue;
+
+            contextMenuCategories.BackColor = Color.Teal;
+            contextMenuCategories.ForeColor = Color.MidnightBlue;
+            contextMenuMembers.BackColor = Color.Teal;
+            contextMenuMembers.ForeColor = Color.MidnightBlue;
+            contextMenuListExps.BackColor = Color.Teal;
+            contextMenuListExps.ForeColor = Color.MidnightBlue;
+
+            label1.ForeColor = Color.MidnightBlue;
+            label2.ForeColor = Color.MidnightBlue;
+        }
+
+        private void oliveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.BackColor = Color.DarkOliveGreen;
+
+            listExps.BackColor = Color.OliveDrab;
+            listExps.ForeColor = Color.YellowGreen;
+
+            menuStrip1.BackColor = Color.DarkOliveGreen;
+            foreach (ToolStripItem item in menuStrip1.Items)
+            {
+                item.ForeColor = Color.YellowGreen;
+            }
+
+            comboBoxSearch.BackColor = Color.OliveDrab;
+            comboBoxSearch.ForeColor = Color.YellowGreen;
+            textBoxSearch.BackColor = Color.OliveDrab;
+            textBoxSearch.ForeColor = Color.YellowGreen;
+
+            comboBoxCategories.BackColor = Color.OliveDrab;
+            comboBoxCategories.ForeColor = Color.YellowGreen;
+            comboBoxMembers.BackColor = Color.OliveDrab;
+            comboBoxMembers.ForeColor = Color.YellowGreen;
+
+            contextMenuCategories.BackColor = Color.DarkOliveGreen;
+            contextMenuCategories.ForeColor = Color.YellowGreen;
+            contextMenuMembers.BackColor = Color.DarkOliveGreen;
+            contextMenuMembers.ForeColor = Color.YellowGreen;
+            contextMenuListExps.BackColor = Color.DarkOliveGreen;
+            contextMenuListExps.ForeColor = Color.YellowGreen;
+
+            label1.ForeColor = Color.YellowGreen;
+            label2.ForeColor = Color.YellowGreen;
         }
     }
 }
