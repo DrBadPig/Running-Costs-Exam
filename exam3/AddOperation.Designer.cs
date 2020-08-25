@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddOperation));
             this.TitletextBox = new System.Windows.Forms.TextBox();
             this.PricetextBox = new System.Windows.Forms.TextBox();
             this.DescriptiontextBox = new System.Windows.Forms.TextBox();
-            this.DatetextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,6 +40,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.MembercomboBox = new System.Windows.Forms.ComboBox();
             this.CategorycomboBox = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // TitletextBox
@@ -59,6 +61,7 @@
             this.PricetextBox.Name = "PricetextBox";
             this.PricetextBox.Size = new System.Drawing.Size(197, 20);
             this.PricetextBox.TabIndex = 1;
+            this.PricetextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PricetextBox_KeyPress);
             // 
             // DescriptiontextBox
             // 
@@ -68,15 +71,6 @@
             this.DescriptiontextBox.Name = "DescriptiontextBox";
             this.DescriptiontextBox.Size = new System.Drawing.Size(197, 20);
             this.DescriptiontextBox.TabIndex = 3;
-            // 
-            // DatetextBox
-            // 
-            this.DatetextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DatetextBox.Location = new System.Drawing.Point(98, 69);
-            this.DatetextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.DatetextBox.Name = "DatetextBox";
-            this.DatetextBox.Size = new System.Drawing.Size(196, 20);
-            this.DatetextBox.TabIndex = 2;
             // 
             // label1
             // 
@@ -160,11 +154,37 @@
             this.CategorycomboBox.Size = new System.Drawing.Size(196, 21);
             this.CategorycomboBox.TabIndex = 13;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(220, 249);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "Ok";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // dateTimePicker
+            // 
+            this.dateTimePicker.CalendarForeColor = System.Drawing.Color.DarkGreen;
+            this.dateTimePicker.CalendarMonthBackground = System.Drawing.Color.Brown;
+            this.dateTimePicker.CalendarTitleBackColor = System.Drawing.Color.Yellow;
+            this.dateTimePicker.CalendarTitleForeColor = System.Drawing.Color.Turquoise;
+            this.dateTimePicker.CalendarTrailingForeColor = System.Drawing.Color.DarkViolet;
+            this.dateTimePicker.Location = new System.Drawing.Point(97, 70);
+            this.dateTimePicker.Name = "dateTimePicker";
+            this.dateTimePicker.Size = new System.Drawing.Size(198, 21);
+            this.dateTimePicker.TabIndex = 15;
+            this.dateTimePicker.Value = new System.DateTime(2020, 8, 25, 18, 35, 51, 0);
+            // 
             // AddOperation
             // 
+            this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(307, 284);
+            this.Controls.Add(this.dateTimePicker);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.CategorycomboBox);
             this.Controls.Add(this.MembercomboBox);
             this.Controls.Add(this.label6);
@@ -174,12 +194,14 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.DescriptiontextBox);
-            this.Controls.Add(this.DatetextBox);
             this.Controls.Add(this.PricetextBox);
             this.Controls.Add(this.TitletextBox);
             this.Font = new System.Drawing.Font("Century", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "AddOperation";
+            this.Text = "Add operation";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,7 +212,6 @@
         private System.Windows.Forms.TextBox TitletextBox;
         private System.Windows.Forms.TextBox PricetextBox;
         private System.Windows.Forms.TextBox DescriptiontextBox;
-        private System.Windows.Forms.TextBox DatetextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -199,5 +220,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox MembercomboBox;
         private System.Windows.Forms.ComboBox CategorycomboBox;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker;
     }
 }

@@ -18,6 +18,10 @@ namespace exam3
         List<string> members;
         List<Operation> notes;
 
+        int current = 0;
+
+        double totalSpent = 0;
+
         string theme;
 
         public Main()
@@ -46,13 +50,13 @@ namespace exam3
 
             listExps.Columns.Add("№", 30, HorizontalAlignment.Left);
             listExps.Columns.Add("Title", 100, HorizontalAlignment.Center);
-            listExps.Columns.Add("Cost", 60, HorizontalAlignment.Center);
+            listExps.Columns.Add("Cost, $", 80, HorizontalAlignment.Center);
             listExps.Columns.Add("Date", 120, HorizontalAlignment.Center);
             listExps.Columns.Add("Description", 230, HorizontalAlignment.Center);
             listExps.Columns.Add("Member", 100, HorizontalAlignment.Right);
 
             members = new List<string>();
-            
+
         }
 
         private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -361,15 +365,101 @@ namespace exam3
 
         private void deleteToolStripMenuItem2_Click(object sender, EventArgs e)
         {
+            DialogResult res = MessageBox.Show("Are you sure you wat to delete it?", "Hey you", MessageBoxButtons.OKCancel);
+            if (res == DialogResult.OK)
+            {
+                foreach (ListViewItem item in listExps.SelectedItems)
+                {
+                    notes.Remove(notes[item.Index]);
 
+                    item.Remove();
+                }
+
+                RedrawList();
+            }
         }
 
         private void addToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            Operation op = new Operation();
-            AddOperation addOperation = new AddOperation(op, theme, members, categories);
+            if (members.Count > 0 && categories.Count > 1)
+            {
+                Operation op = new Operation();
+                AddOperation addOperation = new AddOperation(op, theme, members, categories);
 
-            DialogResult res = addOperation.ShowDialog();
+                DialogResult res = addOperation.ShowDialog();
+
+                if (res == DialogResult.OK)
+                {
+                    notes.Add(op);
+                    ListViewItem item = new ListViewItem(Convert.ToString(current));
+
+                    current++;
+
+                    item.SubItems.Add(op.Title);
+                    item.SubItems.Add(op.Price.ToString());
+                    item.SubItems.Add(op.Date.ToString());
+                    item.SubItems.Add(op.Description);
+                    item.SubItems.Add(op.Member);
+
+                    int grIndex = 0;
+
+                    for (int k = 0; k < listExps.Groups.Count; k++)
+                    {
+                        if (listExps.Groups[k].Header == op.Category)
+                        {
+                            grIndex = k;
+                            break;
+                        }
+                    }
+
+                    ListViewGroup group = listExps.Groups[grIndex];
+
+                    item.Group = group;
+
+                    listExps.Items.Add(item);
+                }
+            }
+            else MessageBox.Show("You must have at least 1 member or category", "Damn it!", MessageBoxButtons.OK);
+        }
+
+        private void RedrawList()
+        {
+            foreach (ListViewItem item in listExps.Items)
+            {
+                item.Remove();
+            }
+
+            current = 0;
+
+            foreach (var op in notes)
+            {
+                ListViewItem _item = new ListViewItem(Convert.ToString(current));
+
+                current++;
+
+                _item.SubItems.Add(op.Title);
+                _item.SubItems.Add(op.Price.ToString());
+                _item.SubItems.Add(op.Date.ToString());
+                _item.SubItems.Add(op.Description);
+                _item.SubItems.Add(op.Member);
+
+                int grIndex = 0;
+
+                for (int k = 0; k < listExps.Groups.Count; k++)
+                {
+                    if (listExps.Groups[k].Header == op.Category)
+                    {
+                        grIndex = k;
+                        break;
+                    }
+                }
+
+                ListViewGroup group = listExps.Groups[grIndex];
+
+                _item.Group = group;
+
+                listExps.Items.Add(_item);
+            }
         }
     }
 }

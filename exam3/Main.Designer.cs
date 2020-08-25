@@ -58,7 +58,6 @@
             this.listExps = new System.Windows.Forms.ListView();
             this.contextMenuListExps = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -320,13 +319,16 @@
             // 
             // listExps
             // 
+            this.listExps.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listExps.BackColor = System.Drawing.Color.White;
             this.listExps.ContextMenuStrip = this.contextMenuListExps;
             this.listExps.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listExps.HideSelection = false;
+            this.listExps.FullRowSelect = true;
             this.listExps.Location = new System.Drawing.Point(0, 0);
             this.listExps.Name = "listExps";
+            this.listExps.ShowItemToolTips = true;
             this.listExps.Size = new System.Drawing.Size(679, 437);
+            this.listExps.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listExps.TabIndex = 0;
             this.listExps.UseCompatibleStateImageBehavior = false;
             this.listExps.View = System.Windows.Forms.View.Details;
@@ -335,33 +337,26 @@
             // 
             this.contextMenuListExps.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addToolStripMenuItem2,
-            this.editToolStripMenuItem,
             this.deleteToolStripMenuItem2});
             this.contextMenuListExps.Name = "contextMenuListExps";
             this.contextMenuListExps.ShowImageMargin = false;
-            this.contextMenuListExps.Size = new System.Drawing.Size(156, 92);
+            this.contextMenuListExps.Size = new System.Drawing.Size(83, 48);
             // 
             // addToolStripMenuItem2
             // 
             this.addToolStripMenuItem2.Name = "addToolStripMenuItem2";
-            this.addToolStripMenuItem2.Size = new System.Drawing.Size(155, 22);
+            this.addToolStripMenuItem2.Size = new System.Drawing.Size(82, 22);
             this.addToolStripMenuItem2.Text = "Add";
             this.addToolStripMenuItem2.Click += new System.EventHandler(this.addToolStripMenuItem2_Click);
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.editToolStripMenuItem.Text = "Edit";
             // 
             // deleteToolStripMenuItem2
             // 
             this.deleteToolStripMenuItem2.Name = "deleteToolStripMenuItem2";
-            this.deleteToolStripMenuItem2.Size = new System.Drawing.Size(155, 22);
+            this.deleteToolStripMenuItem2.Size = new System.Drawing.Size(82, 22);
             this.deleteToolStripMenuItem2.Text = "Delete";
             this.deleteToolStripMenuItem2.Click += new System.EventHandler(this.deleteToolStripMenuItem2_Click);
             // 
-            // Form1
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -372,7 +367,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(800, 500);
-            this.Name = "Form1";
+            this.Name = "Main";
             this.Text = "Runnings costs";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -419,7 +414,6 @@
         private System.Windows.Forms.ToolStripMenuItem oliveToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuListExps;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem2;
     }
 }

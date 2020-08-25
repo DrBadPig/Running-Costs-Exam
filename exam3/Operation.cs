@@ -11,7 +11,6 @@ namespace exam3
     /// </summary>
     public class Operation
     {
-        int id;
         DateTime date;
         string title;
         double price;
@@ -19,7 +18,7 @@ namespace exam3
         string member;
         string category;
 
-        public int Id { get => id; set => id = value; }
+
         public DateTime Date { get => date; set => date = value; }
         public string Title { get => title; set => title = value; }
         public double Price { get => price; set => price = value; }
