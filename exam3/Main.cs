@@ -114,9 +114,33 @@ namespace exam3
 
                 if (res == DialogResult.Yes)
                 {
+                    for (int i = 0; i < notes.Count; i++)
+                    {
+                        if (notes[i].Category == comboBoxCategories.SelectedItem.ToString())
+                        {
+                            notes.Remove(notes[i]);
+                            i--;
+                        }
+                    }
+
+                    int grIndex = 0;
+
+                    for (int k = 0; k < listExps.Groups.Count; k++)
+                    {
+                        if (listExps.Groups[k].Header == comboBoxCategories.SelectedItem.ToString())
+                        {
+                            grIndex = k;
+                            break;
+                        }
+                    }
+
+                    ListViewGroup gr = listExps.Groups[grIndex];
+
+                    listExps.Groups.Remove(gr);
                     categories.Remove(comboBoxCategories.SelectedItem.ToString());
                     comboBoxCategories.Items.Remove(comboBoxCategories.SelectedItem.ToString());
 
+                    RedrawList();
                     /*
                      
                     NEED TO DO SOME SHIT
@@ -460,6 +484,43 @@ namespace exam3
 
                 listExps.Items.Add(_item);
             }
+        }
+
+        private void listExps_ItemActivate(object sender, EventArgs e)
+        {
+            if (members.Count > 0 && categories.Count > 1)
+            {
+                Operation op = notes[Convert.ToInt32(listExps.FocusedItem.SubItems[0].Text)];
+                ViewAndEdit viewAndEdit = new ViewAndEdit(op, theme, members, categories);
+
+                DialogResult res = viewAndEdit.ShowDialog();
+
+                if (res == DialogResult.OK)
+                {
+                    int grIndex = 0;
+
+                    for (int k = 0; k < listExps.Groups.Count; k++)
+                    {
+                        if (listExps.Groups[k].Header == op.Category)
+                        {
+                            grIndex = k;
+                            break;
+                        }
+                    }
+
+                    ListViewGroup group = listExps.Groups[grIndex];
+
+                    listExps.FocusedItem.Group = group;
+
+                    listExps.FocusedItem.SubItems[1].Text = op.Title;
+                    listExps.FocusedItem.SubItems[2].Text = Convert.ToString(op.Price);
+                    listExps.FocusedItem.SubItems[3].Text = Convert.ToString(op.Date);
+                    listExps.FocusedItem.SubItems[4].Text = op.Description;
+                    listExps.FocusedItem.SubItems[5].Text = op.Member;
+
+                }
+            }
+            else MessageBox.Show("You must have at least 1 member or category", "Damn it!", MessageBoxButtons.OK);
         }
     }
 }

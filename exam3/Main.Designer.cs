@@ -42,6 +42,7 @@
             this.arcticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deepSeaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oliveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.comboBoxSearch = new System.Windows.Forms.ComboBox();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
@@ -74,7 +75,8 @@
             this.menuStrip1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.statisticsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -165,6 +167,12 @@
             this.oliveToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.oliveToolStripMenuItem.Text = "Olive";
             this.oliveToolStripMenuItem.Click += new System.EventHandler(this.oliveToolStripMenuItem_Click);
+            // 
+            // statisticsToolStripMenuItem
+            // 
+            this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.statisticsToolStripMenuItem.Text = "Statistics";
             // 
             // splitContainer1
             // 
@@ -324,6 +332,7 @@
             this.listExps.ContextMenuStrip = this.contextMenuListExps;
             this.listExps.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listExps.FullRowSelect = true;
+            this.listExps.HideSelection = false;
             this.listExps.Location = new System.Drawing.Point(0, 0);
             this.listExps.Name = "listExps";
             this.listExps.ShowItemToolTips = true;
@@ -332,6 +341,7 @@
             this.listExps.TabIndex = 0;
             this.listExps.UseCompatibleStateImageBehavior = false;
             this.listExps.View = System.Windows.Forms.View.Details;
+            this.listExps.ItemActivate += new System.EventHandler(this.listExps_ItemActivate);
             // 
             // contextMenuListExps
             // 
@@ -415,6 +425,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuListExps;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
     }
 }
 

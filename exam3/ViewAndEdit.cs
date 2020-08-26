@@ -10,16 +10,26 @@ using System.Windows.Forms;
 
 namespace exam3
 {
-    public partial class AddOperation : Form
+    public partial class ViewAndEdit : Form
     {
+        bool edit = false;
         Operation operation;
-        public AddOperation(Operation op, string theme, List<string> members, List<string> categ)
+
+        public ViewAndEdit(Operation op, string theme, List<string> members, List<string> categ)
         {
             InitializeComponent();
+
             operation = op;
 
-            CategorycomboBox.Items.AddRange(categ.ToArray());
             MembercomboBox.Items.AddRange(members.ToArray());
+            CategorycomboBox.Items.AddRange(categ.ToArray());
+
+            TitletextBox.Text = op.Title;
+            PricetextBox.Text = op.Price.ToString();
+            DescriptiontextBox.Text = op.Description;
+            dateTimePicker.Value = op.Date;
+            MembercomboBox.SelectedItem = op.Member;
+            CategorycomboBox.SelectedItem = op.Category;
 
             switch (theme)
             {
@@ -138,27 +148,43 @@ namespace exam3
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            TitletextBox.Enabled = true;
+            PricetextBox.Enabled = true;
+            dateTimePicker.Enabled = true;
+            DescriptiontextBox.Enabled = true;
+            MembercomboBox.Enabled = true;
+            CategorycomboBox.Enabled = true;
+
+            edit = true;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            if (TitletextBox.Text.Length != 0 && PricetextBox.Text.Length != 0
-                && CategorycomboBox.SelectedItem != null && DescriptiontextBox.Text.Length != 0 
+            if (edit)
+            {
+                if (TitletextBox.Text.Length != 0 && PricetextBox.Text.Length != 0
+                && CategorycomboBox.SelectedItem != null && DescriptiontextBox.Text.Length != 0
                 && MembercomboBox.SelectedItem != null)
-            {
-                this.DialogResult = DialogResult.OK;
+                {
+                    this.DialogResult = DialogResult.OK;
 
-                operation.Description = DescriptiontextBox.Text;
-                operation.Member = MembercomboBox.SelectedItem.ToString();
-                operation.Title = TitletextBox.Text;
-                operation.Price = Convert.ToDouble(PricetextBox.Text);
-                operation.Category = CategorycomboBox.SelectedItem.ToString();
-                operation.Date = dateTimePicker.Value;
+                    operation.Description = DescriptiontextBox.Text;
+                    operation.Member = MembercomboBox.SelectedItem.ToString();
+                    operation.Title = TitletextBox.Text;
+                    operation.Price = Convert.ToDouble(PricetextBox.Text);
+                    operation.Category = CategorycomboBox.SelectedItem.ToString();
+                    operation.Date = dateTimePicker.Value;
 
-                this.Close();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Not all required fields are filled", "Warning", MessageBoxButtons.OK);
+                }
             }
-            else
-            {
-                MessageBox.Show("Not all required fields are filled", "Warning", MessageBoxButtons.OK);
-            }
+            this.Close();
         }
 
         private void PricetextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -189,7 +215,8 @@ namespace exam3
                 {
                     e.Handled = true;
                 }
-            } else if (!Char.IsDigit(number) && number != 8)
+            }
+            else if (!Char.IsDigit(number) && number != 8)
             {
                 e.Handled = true;
             }
