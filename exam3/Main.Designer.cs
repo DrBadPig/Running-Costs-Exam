@@ -44,6 +44,7 @@
             this.oliveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.ShowAllButton = new System.Windows.Forms.Button();
             this.comboBoxSearch = new System.Windows.Forms.ComboBox();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -173,6 +174,7 @@
             this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
             this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.statisticsToolStripMenuItem.Text = "Statistics";
+            this.statisticsToolStripMenuItem.Click += new System.EventHandler(this.statisticsToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 
@@ -182,6 +184,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.ShowAllButton);
             this.splitContainer1.Panel1.Controls.Add(this.comboBoxSearch);
             this.splitContainer1.Panel1.Controls.Add(this.textBoxSearch);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
@@ -196,15 +199,28 @@
             this.splitContainer1.SplitterDistance = 117;
             this.splitContainer1.TabIndex = 1;
             // 
+            // ShowAllButton
+            // 
+            this.ShowAllButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ShowAllButton.Location = new System.Drawing.Point(3, 132);
+            this.ShowAllButton.Name = "ShowAllButton";
+            this.ShowAllButton.Size = new System.Drawing.Size(112, 23);
+            this.ShowAllButton.TabIndex = 8;
+            this.ShowAllButton.Text = "Show All";
+            this.ShowAllButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ShowAllButton.UseVisualStyleBackColor = true;
+            this.ShowAllButton.Click += new System.EventHandler(this.ShowAllButton_Click);
+            // 
             // comboBoxSearch
             // 
             this.comboBoxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxSearch.BackColor = System.Drawing.Color.White;
+            this.comboBoxSearch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSearch.FormattingEnabled = true;
             this.comboBoxSearch.Items.AddRange(new object[] {
-            "ID",
             "Date",
             "Title",
             "Description"});
@@ -212,7 +228,6 @@
             this.comboBoxSearch.Name = "comboBoxSearch";
             this.comboBoxSearch.Size = new System.Drawing.Size(111, 21);
             this.comboBoxSearch.TabIndex = 7;
-            this.comboBoxSearch.Text = "Search Type";
             // 
             // textBoxSearch
             // 
@@ -224,6 +239,7 @@
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(111, 20);
             this.textBoxSearch.TabIndex = 6;
+            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
             // 
             // label2
             // 
@@ -250,6 +266,7 @@
             this.comboBoxCategories.Name = "comboBoxCategories";
             this.comboBoxCategories.Size = new System.Drawing.Size(111, 21);
             this.comboBoxCategories.TabIndex = 4;
+            this.comboBoxCategories.SelectedIndexChanged += new System.EventHandler(this.comboBoxCategories_SelectedIndexChanged);
             // 
             // contextMenuCategories
             // 
@@ -300,6 +317,7 @@
             this.comboBoxMembers.Name = "comboBoxMembers";
             this.comboBoxMembers.Size = new System.Drawing.Size(111, 21);
             this.comboBoxMembers.TabIndex = 0;
+            this.comboBoxMembers.SelectedIndexChanged += new System.EventHandler(this.comboBoxMembers_SelectedIndexChanged);
             // 
             // contextMenuMembers
             // 
@@ -379,6 +397,7 @@
             this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "Main";
             this.Text = "Runnings costs";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -426,6 +445,7 @@
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
+        private System.Windows.Forms.Button ShowAllButton;
     }
 }
 

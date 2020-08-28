@@ -10,3 +10,4 @@ E:\VS Projects\Windows Forms\exam3\exam3\obj\Debug\exam3.pdb
 E:\VS Projects\Windows Forms\exam3\exam3\obj\Debug\exam3.AddOperation.resources
 E:\VS Projects\Windows Forms\exam3\exam3\obj\Debug\exam3.Main.resources
 E:\VS Projects\Windows Forms\exam3\exam3\obj\Debug\exam3.ViewAndEdit.resources
+E:\VS Projects\Windows Forms\exam3\exam3\obj\Debug\exam3.Stats.resources

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,7 @@ namespace exam3
 
         int current = 0;
 
-        double totalSpent = 0;
-
-        string theme;
+        string theme = "standart";
 
         public Main()
         {
@@ -57,6 +57,37 @@ namespace exam3
 
             members = new List<string>();
 
+            if (File.Exists("config.txt"))
+            {
+                StreamReader reader = new StreamReader("config.txt");
+
+                theme = reader.ReadLine();
+
+                reader.Close();
+            }
+
+            switch (theme)
+            {
+                case "standart":
+                    standartToolStripMenuItem_Click(this, new EventArgs());
+                    break;
+                case "dark":
+                    standartToolStripMenuItem_Click(this, new EventArgs());
+                    break;
+                case "glamor":
+                    standartToolStripMenuItem_Click(this, new EventArgs());
+                    break;
+                case "arctic":
+                    standartToolStripMenuItem_Click(this, new EventArgs());
+                    break;
+                case "deepsea":
+                    standartToolStripMenuItem_Click(this, new EventArgs());
+                    break;
+                case "olive":
+                    standartToolStripMenuItem_Click(this, new EventArgs());
+                    break;
+            }
+
         }
 
         private void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -70,14 +101,19 @@ namespace exam3
 
                 if (res == DialogResult.Yes)
                 {
-                    members.Remove(comboBoxCategories.SelectedItem.ToString());
+                    for (int i = 0; i < notes.Count; i++)
+                    {
+                        if (notes[i].Member == comboBoxMembers.SelectedItem.ToString())
+                        {
+                            notes.Remove(notes[i]);
+                            i--;
+                        }
+                    }
+
+                    members.Remove(comboBoxMembers.SelectedItem.ToString());
                     comboBoxMembers.Items.Remove(comboBoxMembers.SelectedItem.ToString());
 
-                    /*
-                     
-                    NEED TO DO SOME SHIT
-
-                    */
+                    RedrawList();
                 }
             }
         }
@@ -446,6 +482,75 @@ namespace exam3
             else MessageBox.Show("You must have at least 1 member or category", "Damn it!", MessageBoxButtons.OK);
         }
 
+        private void listExps_ItemActivate(object sender, EventArgs e)
+        {
+            if (members.Count > 0 && categories.Count > 1)
+            {
+                Operation op = notes[Convert.ToInt32(listExps.FocusedItem.SubItems[0].Text)];
+                ViewAndEdit viewAndEdit = new ViewAndEdit(op, theme, members, categories);
+
+                DialogResult res = viewAndEdit.ShowDialog();
+
+                if (res == DialogResult.OK)
+                {
+                    int grIndex = 0;
+
+                    for (int k = 0; k < listExps.Groups.Count; k++)
+                    {
+                        if (listExps.Groups[k].Header == op.Category)
+                        {
+                            grIndex = k;
+                            break;
+                        }
+                    }
+
+                    ListViewGroup group = listExps.Groups[grIndex];
+
+                    listExps.FocusedItem.Group = group;
+
+                    listExps.FocusedItem.SubItems[1].Text = op.Title;
+                    listExps.FocusedItem.SubItems[2].Text = Convert.ToString(op.Price);
+                    listExps.FocusedItem.SubItems[3].Text = Convert.ToString(op.Date);
+                    listExps.FocusedItem.SubItems[4].Text = op.Description;
+                    listExps.FocusedItem.SubItems[5].Text = op.Member;
+
+                }
+            }
+            else MessageBox.Show("You must have at least 1 member or category", "Damn it!", MessageBoxButtons.OK);
+        }
+
+        private void statisticsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Stats stats = new Stats(notes, theme);
+
+            DialogResult res = stats.ShowDialog();
+        }
+
+        private void ShowAllButton_Click(object sender, EventArgs e)
+        {
+            comboBoxCategories.SelectedItem = null;
+            comboBoxMembers.SelectedItem = null;
+            textBoxSearch.Text = null;
+            comboBoxSearch.Text = null;
+
+            RedrawList();
+        }
+
+        private void comboBoxMembers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxMembers.SelectedItem != null)
+                RedrawList("mem", comboBoxMembers.SelectedItem.ToString());
+        }
+
+        private void comboBoxCategories_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxCategories.SelectedItem != null)
+                RedrawList("cat", comboBoxCategories.SelectedItem.ToString());
+        }
+
+        /// <summary>
+        /// Redrawing list again
+        /// </summary>
         private void RedrawList()
         {
             foreach (ListViewItem item in listExps.Items)
@@ -486,41 +591,219 @@ namespace exam3
             }
         }
 
-        private void listExps_ItemActivate(object sender, EventArgs e)
+        /// <summary>
+        /// Sorting list by type ad title
+        /// </summary>
+        /// <param name="type">"mem" for members, "cat" for categories</param>
+        /// <param name="title">string will redraw (sort) by</param>
+        private void RedrawList(string type, string title)
         {
-            if (members.Count > 0 && categories.Count > 1)
+            foreach (ListViewItem item in listExps.Items)
             {
-                Operation op = notes[Convert.ToInt32(listExps.FocusedItem.SubItems[0].Text)];
-                ViewAndEdit viewAndEdit = new ViewAndEdit(op, theme, members, categories);
+                item.Remove();
+            }
 
-                DialogResult res = viewAndEdit.ShowDialog();
+            current = 0;
 
-                if (res == DialogResult.OK)
+            foreach (var op in notes)
+            {
+                if (type == "mem")
                 {
-                    int grIndex = 0;
-
-                    for (int k = 0; k < listExps.Groups.Count; k++)
+                    if (op.Member == title)
                     {
-                        if (listExps.Groups[k].Header == op.Category)
+                        ListViewItem _item = new ListViewItem(Convert.ToString(current));
+
+                        current++;
+
+                        _item.SubItems.Add(op.Title);
+                        _item.SubItems.Add(op.Price.ToString());
+                        _item.SubItems.Add(op.Date.ToString());
+                        _item.SubItems.Add(op.Description);
+                        _item.SubItems.Add(op.Member);
+
+                        int grIndex = 0;
+
+                        for (int k = 0; k < listExps.Groups.Count; k++)
                         {
-                            grIndex = k;
-                            break;
+                            if (listExps.Groups[k].Header == op.Category)
+                            {
+                                grIndex = k;
+                                break;
+                            }
                         }
+
+                        ListViewGroup group = listExps.Groups[grIndex];
+
+                        _item.Group = group;
+
+                        listExps.Items.Add(_item);
                     }
+                }
+                else if (type == "cat")
+                {
+                    if (op.Category == title)
+                    {
+                        ListViewItem _item = new ListViewItem(Convert.ToString(current));
 
-                    ListViewGroup group = listExps.Groups[grIndex];
+                        current++;
 
-                    listExps.FocusedItem.Group = group;
+                        _item.SubItems.Add(op.Title);
+                        _item.SubItems.Add(op.Price.ToString());
+                        _item.SubItems.Add(op.Date.ToString());
+                        _item.SubItems.Add(op.Description);
+                        _item.SubItems.Add(op.Member);
 
-                    listExps.FocusedItem.SubItems[1].Text = op.Title;
-                    listExps.FocusedItem.SubItems[2].Text = Convert.ToString(op.Price);
-                    listExps.FocusedItem.SubItems[3].Text = Convert.ToString(op.Date);
-                    listExps.FocusedItem.SubItems[4].Text = op.Description;
-                    listExps.FocusedItem.SubItems[5].Text = op.Member;
+                        int grIndex = 0;
 
+                        for (int k = 0; k < listExps.Groups.Count; k++)
+                        {
+                            if (listExps.Groups[k].Header == op.Category)
+                            {
+                                grIndex = k;
+                                break;
+                            }
+                        }
+
+                        ListViewGroup group = listExps.Groups[grIndex];
+
+                        _item.Group = group;
+
+                        listExps.Items.Add(_item);
+                    }
                 }
             }
-            else MessageBox.Show("You must have at least 1 member or category", "Damn it!", MessageBoxButtons.OK);
+        }
+
+        private void textBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in listExps.Items)
+            {
+                item.Remove();
+            }
+
+            current = 0;
+
+            foreach (var item in notes)
+            {
+                if (comboBoxSearch.SelectedItem != null)
+                {
+                    switch (comboBoxSearch.SelectedItem.ToString())
+                    {
+                        case "Date":
+                            if (item.Date.ToString().Contains(textBoxSearch.Text))
+                            {
+                                ListViewItem _item = new ListViewItem(Convert.ToString(current));
+
+                                current++;
+
+                                _item.SubItems.Add(item.Title);
+                                _item.SubItems.Add(item.Price.ToString());
+                                _item.SubItems.Add(item.Date.ToString());
+                                _item.SubItems.Add(item.Description);
+                                _item.SubItems.Add(item.Member);
+
+                                int grIndex = 0;
+
+                                for (int k = 0; k < listExps.Groups.Count; k++)
+                                {
+                                    if (listExps.Groups[k].Header == item.Category)
+                                    {
+                                        grIndex = k;
+                                        break;
+                                    }
+                                }
+
+                                ListViewGroup group = listExps.Groups[grIndex];
+
+                                _item.Group = group;
+
+                                listExps.Items.Add(_item);
+                            }
+                            break;
+                        case "Description":
+                            if (item.Description.Contains(textBoxSearch.Text))
+                            {
+                                ListViewItem _item = new ListViewItem(Convert.ToString(current));
+
+                                current++;
+
+                                _item.SubItems.Add(item.Title);
+                                _item.SubItems.Add(item.Price.ToString());
+                                _item.SubItems.Add(item.Date.ToString());
+                                _item.SubItems.Add(item.Description);
+                                _item.SubItems.Add(item.Member);
+
+                                int grIndex = 0;
+
+                                for (int k = 0; k < listExps.Groups.Count; k++)
+                                {
+                                    if (listExps.Groups[k].Header == item.Category)
+                                    {
+                                        grIndex = k;
+                                        break;
+                                    }
+                                }
+
+                                ListViewGroup group = listExps.Groups[grIndex];
+
+                                _item.Group = group;
+
+                                listExps.Items.Add(_item);
+                            }
+                            break;
+                        case "Title":
+                            if (item.Title.Contains(textBoxSearch.Text))
+                            {
+                                ListViewItem _item = new ListViewItem(Convert.ToString(current));
+
+                                current++;
+
+                                _item.SubItems.Add(item.Title);
+                                _item.SubItems.Add(item.Price.ToString());
+                                _item.SubItems.Add(item.Date.ToString());
+                                _item.SubItems.Add(item.Description);
+                                _item.SubItems.Add(item.Member);
+
+                                int grIndex = 0;
+
+                                for (int k = 0; k < listExps.Groups.Count; k++)
+                                {
+                                    if (listExps.Groups[k].Header == item.Category)
+                                    {
+                                        grIndex = k;
+                                        break;
+                                    }
+                                }
+
+                                ListViewGroup group = listExps.Groups[grIndex];
+
+                                _item.Group = group;
+
+                                listExps.Items.Add(_item);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            StreamWriter streamWriter = new StreamWriter("config.txt");
+
+            //////////////////////////////////////////////////////////
+
+            streamWriter.WriteLine(theme);
+
+            streamWriter.Close();
+
+            DialogResult res = MessageBox.Show("Are you sure about that?", "Hey you", MessageBoxButtons.YesNo);
+            if (res == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

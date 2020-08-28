@@ -212,6 +212,7 @@
             this.Controls.Add(this.DescriptiontextBox);
             this.Controls.Add(this.PricetextBox);
             this.Controls.Add(this.TitletextBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ViewAndEdit";
             this.Text = "View";
             this.ResumeLayout(false);
