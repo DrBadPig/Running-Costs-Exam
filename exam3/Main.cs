@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace exam3
 {
@@ -22,21 +23,37 @@ namespace exam3
 
         int current = 0;
 
-        string theme = "standart";
+        string theme;
 
         public Main()
         {
             InitializeComponent();
 
             categories = new List<string>();
-            categories.Add("Products");
-            categories.Add("Cafe");
-            categories.Add("By-time");
-            categories.Add("Transport");
-            categories.Add("Family");
-            categories.Add("Health");
-            categories.Add("Shopping");
-            categories.Add("Gifts");
+            if (File.Exists("categs.txt"))
+            {
+                StreamReader reader = new StreamReader("categs.txt");
+
+                int n = Convert.ToInt32(reader.ReadLine());
+
+                for (int i = 0; i < n; i++)
+                {
+                    categories.Add(reader.ReadLine());
+                }
+
+                reader.Close();
+            }
+            else
+            {
+                categories.Add("Products");
+                categories.Add("Cafe");
+                categories.Add("By-time");
+                categories.Add("Transport");
+                categories.Add("Family");
+                categories.Add("Health");
+                categories.Add("Shopping");
+                categories.Add("Gifts");
+            }
 
             comboBoxCategories.Items.AddRange(categories.ToArray());
 
@@ -47,6 +64,11 @@ namespace exam3
             }
 
             notes = new List<Operation>();
+            if (File.Exists("notes.xml"))
+            {
+                LoadNotes("notes.xml");
+                RedrawList();
+            }
 
             listExps.Columns.Add("№", 30, HorizontalAlignment.Left);
             listExps.Columns.Add("Title", 100, HorizontalAlignment.Center);
@@ -56,6 +78,21 @@ namespace exam3
             listExps.Columns.Add("Member", 100, HorizontalAlignment.Right);
 
             members = new List<string>();
+            if (File.Exists("membs.txt"))
+            {
+                StreamReader reader = new StreamReader("membs.txt");
+
+                int n = Convert.ToInt32(reader.ReadLine());
+
+                for (int i = 0; i < n; i++)
+                {
+                    members.Add(reader.ReadLine());
+                }
+
+                reader.Close();
+
+                comboBoxMembers.Items.AddRange(members.ToArray());
+            }
 
             if (File.Exists("config.txt"))
             {
@@ -72,19 +109,19 @@ namespace exam3
                     standartToolStripMenuItem_Click(this, new EventArgs());
                     break;
                 case "dark":
-                    standartToolStripMenuItem_Click(this, new EventArgs());
+                    darkToolStripMenuItem_Click(this, new EventArgs());
                     break;
                 case "glamor":
-                    standartToolStripMenuItem_Click(this, new EventArgs());
+                    glamorToolStripMenuItem_Click(this, new EventArgs());
                     break;
                 case "arctic":
-                    standartToolStripMenuItem_Click(this, new EventArgs());
+                    arcticToolStripMenuItem_Click(this, new EventArgs());
                     break;
                 case "deepsea":
-                    standartToolStripMenuItem_Click(this, new EventArgs());
+                    deepSeaToolStripMenuItem_Click(this, new EventArgs());
                     break;
                 case "olive":
-                    standartToolStripMenuItem_Click(this, new EventArgs());
+                    oliveToolStripMenuItem_Click(this, new EventArgs());
                     break;
             }
 
@@ -676,16 +713,16 @@ namespace exam3
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in listExps.Items)
+            if (comboBoxSearch.SelectedItem != null)
             {
-                item.Remove();
-            }
+                foreach (ListViewItem item in listExps.Items)
+                {
+                    item.Remove();
+                }
 
-            current = 0;
+                current = 0;
 
-            foreach (var item in notes)
-            {
-                if (comboBoxSearch.SelectedItem != null)
+                foreach (var item in notes)
                 {
                     switch (comboBoxSearch.SelectedItem.ToString())
                     {
@@ -785,24 +822,179 @@ namespace exam3
                         default:
                             break;
                     }
+
                 }
             }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            StreamWriter streamWriter = new StreamWriter("config.txt");
+            DialogResult res = MessageBox.Show("Save your curret data?", "Hey you", MessageBoxButtons.YesNoCancel);
+            if (res == DialogResult.Yes)
+            {
+                StreamWriter streamWriter = new StreamWriter("config.txt");
 
-            //////////////////////////////////////////////////////////
+                streamWriter.WriteLine(theme);
 
-            streamWriter.WriteLine(theme);
+                streamWriter.Close();
 
-            streamWriter.Close();
+                streamWriter = new StreamWriter("membs.txt");
 
-            DialogResult res = MessageBox.Show("Are you sure about that?", "Hey you", MessageBoxButtons.YesNo);
-            if (res == DialogResult.No)
+                streamWriter.WriteLine(members.Count);
+                foreach (var item in members)
+                {
+                    streamWriter.WriteLine(item);
+                }
+
+                streamWriter.Close();
+
+                streamWriter = new StreamWriter("categs.txt");
+
+                streamWriter.WriteLine(categories.Count);
+                foreach (var item in categories)
+                {
+                    streamWriter.WriteLine(item);
+                }
+
+                streamWriter.Close();
+
+                SaveNotes("notes.xml");
+            }
+            else if (res == DialogResult.Cancel)
             {
                 e.Cancel = true;
+            }
+
+        }
+
+        private void SaveNotes(string filename)
+        {
+            XmlWriter writer;
+
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.NewLineChars = "\r\n";
+            settings.Encoding = Encoding.ASCII;
+            settings.NewLineOnAttributes = false;
+
+            writer = XmlWriter.Create(filename, settings);
+
+            writer.WriteStartDocument();
+            writer.WriteStartElement("Operations");
+
+            foreach (var item in notes)
+            {
+                writer.WriteStartElement("Note");
+                writer.WriteElementString("Title", $"{item.Title}");
+                writer.WriteElementString("Price", $"{item.Price}");
+                writer.WriteElementString("Date", $"{item.Date}");
+                writer.WriteElementString("Description", $"{item.Description}");
+                writer.WriteElementString("Member", $"{item.Member}");
+                writer.WriteElementString("Category", $"{item.Category}");
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
+
+            writer.WriteEndDocument();
+
+            writer.Flush();
+            writer.Close();
+        }
+
+        private void LoadNotes(string filename)
+        {
+            XmlReader reader = XmlReader.Create(filename);
+
+            Operation o = new Operation();
+
+            notes.Clear();
+            current = 0;
+
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.Element || reader.NodeType == XmlNodeType.XmlDeclaration)
+                {
+                    if (reader.Name == "Title")
+                    {
+                        o.Title = reader.ReadElementContentAsString();
+                    }
+                    if (reader.Name == "Price")
+                    {
+                        o.Price = Convert.ToDouble(reader.ReadElementContentAsString());
+                    }
+                    if (reader.Name == "Date")
+                    {
+                        o.Date = Convert.ToDateTime(reader.ReadElementContentAsString());
+                    }
+                    if (reader.Name == "Description")
+                    {
+                        o.Description = reader.ReadElementContentAsString();
+                    }
+                    if (reader.Name == "Member")
+                    {
+                        o.Member = reader.ReadElementContentAsString();
+                    }
+                    if (reader.Name == "Category")
+                    {
+                        o.Category = reader.ReadElementContentAsString();
+
+                        notes.Add(o);
+
+                        o = new Operation();
+                        current++;
+                    }
+                }
+            }
+
+            reader.Close();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.Title = "Save operations";
+            saveFileDialog1.Filter = "XML files|*.xml";
+            saveFileDialog1.FilterIndex = 1;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                SaveNotes(saveFileDialog1.FileName);
+            }
+        }
+
+        private void opennToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Title = "Load operations";
+            openFileDialog1.Filter = "XML files|*.xml";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.CheckFileExists = true;
+            openFileDialog1.Multiselect = false;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                LoadNotes(openFileDialog1.FileName);
+                RedrawList();
+            }
+        }
+
+        private void deleteAllDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult res = MessageBox.Show("Are you sure about that? You can quit without saving to restore your data", "WAIT A MINUTE", MessageBoxButtons.YesNo);
+            if (res == DialogResult.Yes)
+            {
+                categories.Clear();
+                comboBoxCategories.Items.Clear();
+
+                members.Clear();
+                comboBoxMembers.Items.Clear();
+
+                notes.Clear();
+                listExps.Items.Clear();
+
+                textBoxSearch.Text = null;
+                comboBoxSearch.SelectedItem = null;
+
+                standartToolStripMenuItem_Click(this, new EventArgs());
             }
         }
     }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Operations>
+  <Note>
+    <Title>Watermelon</Title>
+    <Price>6,6</Price>
+    <Date>28.08.2020 0:00:00</Date>
+    <Description>I have bought this watermelon for might 7 dollars i want to die</Description>
+    <Member>Father</Member>
+    <Category>Products</Category>
+  </Note>
+  <Note>
+    <Title>Visiting cafe</Title>
+    <Price>49,99</Price>
+    <Date>24.08.2020 0:00:00</Date>
+    <Description>I have never eat so expensive dishes</Description>
+    <Member>Father</Member>
+    <Category>Cafe</Category>
+  </Note>
+  <Note>
+    <Title>New dress</Title>
+    <Price>15</Price>
+    <Date>25.08.2020 0:00:00</Date>
+    <Description>I love it so much! Dad: Dress for 15 dollars rus???</Description>
+    <Member>Mother</Member>
+    <Category>Shopping</Category>
+  </Note>
+  <Note>
+    <Title>Laptop ASUS ROG</Title>
+    <Price>1533</Price>
+    <Date>14.07.2020 0:00:00</Date>
+    <Description>GOD DAMN I WAS DREAMING ABOUT IT FOR SO LONG!!! THAKS FAMILY!!!</Description>
+    <Member>Son</Member>
+    <Category>Shopping</Category>
+  </Note>
+</Operations>

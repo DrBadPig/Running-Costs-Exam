@@ -1,0 +1,9 @@
+8
+Products
+Cafe
+By-time
+Transport
+Family
+Health
+Shopping
+Gifts
